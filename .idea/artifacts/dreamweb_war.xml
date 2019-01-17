@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="war" name="dreamweb:war">
+    <output-path>$PROJECT_DIR$/dreamweb/target</output-path>
+    <root id="archive" name="dream-web.war">
+      <element id="artifact" artifact-name="dreamweb:war exploded" />
+    </root>
+  </artifact>
+</component>
