@@ -21,4 +21,6 @@ public interface CommentService {
 
     void deleteChildrenComment(String children);
 
+    void deleteByContentId(Long cid);
+
 }

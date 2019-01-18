@@ -7,6 +7,7 @@ import com.du.www.service.UserService;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -17,6 +18,8 @@ public class LoginController extends BaseController{
     private final static Logger  log =Logger.getLogger(LoginController.class);
     @Autowired
     private UserService userService;
+    @Autowired
+    private RedisTemplate<String,String> redisTemplate;
 
     @RequestMapping("/login")
     public String login(Model model){
@@ -57,7 +60,7 @@ public class LoginController extends BaseController{
             log.info("用户登录登录成功");
             getSession().setAttribute("user",user);
             model.addAttribute("user",user);
-            return "/personal/personal";
+            return "redirect:/list";
         }else {
             log.info("用户登录登录失败");
             model.addAttribute("email",email);
@@ -74,5 +77,13 @@ public class LoginController extends BaseController{
             return 0;
         }
         return 1;
+    }
+
+    @RequestMapping("/loginout")
+    public String exit(Model model){
+        log.info("退出登录");
+        getSession().removeAttribute("user");
+        getSession().invalidate();
+        return "../login";
     }
 }

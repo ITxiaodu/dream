@@ -6,6 +6,7 @@ import com.du.www.dao.UserContentMapper;
 import com.du.www.entity.Comment;
 import com.du.www.entity.UserContent;
 import com.du.www.service.UserContentService;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import tk.mybatis.mapper.entity.Example;
@@ -53,8 +54,8 @@ public class UserContentServiceImpl implements UserContentService{
     }
 
     @Override
-    public void addContent(UserContent content) {
-        userContentMapper.insert(content);
+    public int addContent(UserContent content) {
+         return  userContentMapper.insert(content);
     }
 
     @Override
@@ -80,5 +81,40 @@ public class UserContentServiceImpl implements UserContentService{
     @Override
     public void updateById(UserContent content) {
         userContentMapper.updateByPrimaryKeySelective(content);
+    }
+
+    @Override
+    public List<UserContent> findCategoryByUid(Long uid) {
+        return userContentMapper.findCategoryByUid(uid);
+    }
+
+    @Override
+    public PageHelper.Page<UserContent> findByCategory(String category, Long uid, Integer pageNum, Integer pageSize) {
+        UserContent userContent = new UserContent();
+        if (StringUtils.isNoneBlank(category)&&!"null".equals(category)){
+            userContent.setCategory(category);
+        }
+        userContent.setuId(uid);
+        userContent.setPersonal("0");
+        PageHelper.startPage(pageNum,pageSize);
+        userContentMapper.select(userContent);
+        PageHelper.Page endPage = PageHelper.endPage();
+        return endPage;
+    }
+
+    @Override
+    public PageHelper.Page<UserContent> findPersonal(Long uid, Integer pageNum, Integer pageSize) {
+        UserContent userContent = new UserContent();
+        userContent.setuId(uid);
+        userContent.setPersonal("1");
+        PageHelper.startPage(pageNum,pageSize);
+        userContentMapper.select(userContent);
+        PageHelper.Page endPage = PageHelper.endPage();
+        return endPage;
+    }
+
+    @Override
+    public void deleteById(Long cid) {
+        userContentMapper.deleteByPrimaryKey(cid);
     }
 }

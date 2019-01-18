@@ -16,7 +16,7 @@ public interface UserContentService {
     PageHelper.Page<UserContent> findAllByUpvote(UserContent content,Integer pageNum,Integer pageSize);
 
 
-    void addContent(UserContent content);
+    int addContent(UserContent content);
 
     List<UserContent> findByUserId(Long uid);
 
@@ -25,4 +25,12 @@ public interface UserContentService {
     UserContent findById(long id);
 
     void  updateById(UserContent content);
+
+    List<UserContent> findCategoryByUid(Long uid);
+
+    PageHelper.Page<UserContent> findPersonal(Long uid,Integer pageNum,Integer pageSize);
+
+    PageHelper.Page<UserContent> findByCategory(String category,Long uid,Integer pageNum,Integer pageSize);
+
+    void deleteById(Long cid);
 }

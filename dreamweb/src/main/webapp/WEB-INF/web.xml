@@ -91,4 +91,13 @@
   <session-config>
     <session-timeout>15</session-timeout>
   </session-config>
+  <!--自定义过滤器-->
+  <filter>
+    <filter-name>dispatcherDemoFilter</filter-name>
+    <filter-class>com.du.www.interceptor.IndexJspFilter</filter-class>
+  </filter>
+  <filter-mapping>
+    <filter-name>dispatcherDemoFilter</filter-name>
+    <url-pattern>/index.jsp</url-pattern>
+  </filter-mapping>
 </web-app>

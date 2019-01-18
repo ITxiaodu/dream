@@ -11,4 +11,6 @@ public interface UpvoteService {
     Upvote getByUid(Upvote upvote);
 
     void update(Upvote upvote);
+
+    void deleteByContentId(Long cid);
 }
