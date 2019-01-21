@@ -1,6 +1,10 @@
 package com.du.www.entity;
 
 
+
+
+import com.du.www.common.DateUtils;
+
 import javax.persistence.Transient;
 import java.util.Date;
 
@@ -31,6 +35,11 @@ public class UserContent {
 
    @Transient
     private Integer num;
+
+   @Transient
+   public String getFormatDate(){
+       return DateUtils.formatDate(getRptTime(),"yyyy-MM-dd HH:mm:ss");
+   }
 
     public Integer getNum() {
         return num;

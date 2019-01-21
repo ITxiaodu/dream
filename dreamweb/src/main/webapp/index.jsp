@@ -6,6 +6,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>梦境网</title>
     <link href="${ctx}/css/bootstrap/css/bootstrap.min.css" rel="stylesheet"/>
     <link href="${ctx}/css/bootstrap/css/bootstrap-theme.min.css" rel="stylesheet"/>
@@ -188,12 +189,18 @@
                                      <img src="${cont.imgUrl}">
                                 </a>
                             </div>
-                            <a href="#" target="_blank">
-                                <h2 class="author-h2">
+
+                                <div class="author-h2">
+                                    <div style="float: left;font-size: 15px;color: #9b8878">
                                         ${cont.nickName}
-                                </h2>
-                            </a>
+                                    </div>
+                                    <div style="float: left;margin-left: 10px;color: grey;margin-top: 2px;font-size: 12px">
+                                         ${cont.formatDate}
+                                    </div>
+                                </div>
+
                         </div>
+
 
                         <h2>${cont.title}</h2>
                             ${cont.content}
@@ -273,7 +280,7 @@
                     <c:if test="${page.pageNum > 1}">
                         <li class="previous"><a href="${ctx}/index_list?pageNum=${page.pageNum-1}&&id=${user.id}">« 上一页</a></li>
                     </c:if>
-                    <c:forEach begin="1" end="${page.pages}" var="pn">
+                    <c:forEach begin="${page.startPage}" end="${page.endPage}" var="pn">
                         <c:if test="${page.pageNum==pn}">
                             <li class="active"><a href="javascript:void(0);">${pn}</a></li>
                         </c:if>
@@ -390,7 +397,7 @@
                         </ul>
                     </div>
                 </div>
-                <!-- rgba(60,63,65,0.31)-->
+               <!-- rgba(60,63,65,0.31)-->
                 <hr style="position: absolute;background-color: rgba(161,171,175,0.31);width: 1000px;height: 1px;left: 0px"/>
                 <hr style="position: absolute;background-color: rgba(161,171,175,0.31);width: 1000px;height: 1px;left: 0px"/>
                 <div class="foot-nav clearfix" style="position: absolute;left: 0px;margin-top: 40px;text-align: center">
@@ -461,8 +468,7 @@
 
         $.ajax({
             type:'post',
-            url:'/upvote',
-            data: {"id":id,"uid":'${user.id}',"upvote":cont},
+            url:'/upvote?id='+id+"&uid=${user.id}&upvote="+ cont,
             dataType:'json',
             success:function(data){
                 var up =  data["data"];

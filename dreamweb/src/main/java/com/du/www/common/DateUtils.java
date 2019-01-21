@@ -20,4 +20,13 @@ public class DateUtils {
         return date;
     }
 
+    public static  String formatDate(Date date,String format){
+        if (date == null){
+            return null;
+        }
+        SimpleDateFormat formatter = new SimpleDateFormat(format);
+        String dateString = formatter.format(date);
+        return dateString;
+    }
+
 }

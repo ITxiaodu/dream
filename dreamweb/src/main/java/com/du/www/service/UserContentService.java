@@ -33,4 +33,6 @@ public interface UserContentService {
     PageHelper.Page<UserContent> findByCategory(String category,Long uid,Integer pageNum,Integer pageSize);
 
     void deleteById(Long cid);
+
+    PageHelper.Page<UserContent> findAll(Integer pageNum,Integer pageSize);
 }

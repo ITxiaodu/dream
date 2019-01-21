@@ -313,7 +313,40 @@ public class PageHelper implements Interceptor {
 			return total;
 		}
 
-		public void setTotal(long total) {
+
+
+		private  int startPage;
+		private int endPage;
+
+		public int getStartPage() {
+			return startPage;
+		}
+
+		public void setStartPage(int startPage) {
+			this.startPage = startPage;
+		}
+
+		public int getEndPage() {
+			return endPage;
+		}
+
+		public void setEndPage(int endPage) {
+			this.endPage = endPage;
+		}
+
+		public void setTotal(long total){
+			int totalCount = Integer.parseInt(total+"");
+			pages = (totalCount+pageSize-1)/pageSize;
+			startPage = pageNum - 5;
+			if (startPage<1){
+				startPage = 1;
+			}
+			endPage = startPage + 9;
+			if (startPage<1){
+				startPage = 1;
+			}
+			System.out.println(startPage + "和" + endPage);
+
 			this.total = total;
 		}
 

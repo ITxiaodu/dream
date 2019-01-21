@@ -8,6 +8,7 @@ import com.du.www.entity.UserContent;
 import com.du.www.service.UserContentService;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
 import tk.mybatis.mapper.entity.Example;
 
@@ -25,7 +26,7 @@ public class UserContentServiceImpl implements UserContentService{
         System.out.println("第"+pageNum+"页");
         System.out.println("每页显示："+pageSize+"条");
         PageHelper.startPage(pageNum,pageSize);
-        List<UserContent> list = userContentMapper.select(content);
+        List<UserContent> list = userContentMapper.findByJoin(content);
         PageHelper.Page endPage = PageHelper.endPage();
         List<UserContent> result = endPage.getResult();
         return endPage;
@@ -75,7 +76,12 @@ public class UserContentServiceImpl implements UserContentService{
     public UserContent findById(long id) {
         UserContent userContent = new UserContent();
         userContent.setId(id);
-        return userContentMapper.selectOne(userContent);
+        List<UserContent> list = userContentMapper.findByJoin(userContent);
+        if(list!=null&&list.size()>0){
+            return list.get(0);
+        }else{
+            return null;
+        }
     }
 
     @Override
@@ -117,4 +123,13 @@ public class UserContentServiceImpl implements UserContentService{
     public void deleteById(Long cid) {
         userContentMapper.deleteByPrimaryKey(cid);
     }
+
+    @Override
+    public PageHelper.Page<UserContent> findAll(Integer pageNum,Integer pageSize){
+        PageHelper.startPage(pageNum,pageSize);
+        List<UserContent> list = userContentMapper.findByJoin(null);
+        PageHelper.Page endPage = PageHelper.endPage();
+        return endPage;
+    }
+
 }

@@ -51,7 +51,7 @@ public class IndexJspController extends BaseController {
         if(user!=null){
             model.addAttribute( "user",user );
         }
-        Page<UserContent> page =  findAll(null,pageNum,  pageSize);
+        Page<UserContent> page =  findAll(pageNum,  pageSize);
         model.addAttribute( "page",page );
         return "../index";
     }
